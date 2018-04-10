@@ -32,6 +32,7 @@
 package loci.formats.in;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import javax.xml.parsers.ParserConfigurationException;
@@ -213,6 +214,11 @@ public class FlowSightReader extends FormatReader {
      * and the images and masks have a different bit depth, so in the
      * OME scheme of things, we get one series per plane.
      */
+    
+    if(core instanceof ArrayList<?>) {
+    	((ArrayList<CoreMetadata>)core).ensureCapacity(ifdOffsets.length);
+    }
+    
     for (int idxOff=1; idxOff<ifdOffsets.length;idxOff++) {
       // TODO: Record the channel names
       final long offset = ifdOffsets[idxOff];
