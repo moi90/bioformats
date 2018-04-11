@@ -216,7 +216,8 @@ public class FlowSightReader extends FormatReader {
      */
     
     if(core instanceof ArrayList<?>) {
-    	((ArrayList<CoreMetadata>)core).ensureCapacity(ifdOffsets.length);
+    	LOGGER.debug(String.format("Increasing capacity to %d", ifdOffsets.length));
+    	((ArrayList<?>)core).ensureCapacity(ifdOffsets.length);
     }
     
     for (int idxOff=1; idxOff<ifdOffsets.length;idxOff++) {
@@ -244,6 +245,9 @@ public class FlowSightReader extends FormatReader {
       ms.metadataComplete = true;
       if (! first) {
         core.add(ms);
+      }
+      if(idxOff % 1000 == 0) {
+    	  LOGGER.debug(String.format("Read %d IFDs.", idxOff));
       }
     }
     /*
